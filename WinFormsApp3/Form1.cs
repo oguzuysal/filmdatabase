@@ -87,10 +87,12 @@ namespace WinFormsApp3
         {
             string oyuncu = textBox1.Text.Trim();
 
-            using (cn)
+            using (SqlConnection connection = new SqlConnection(cn.ConnectionString))
             {
+                connection.Open();
+
                 string query = "SELECT film_adi, oyuncu_adi, yonetmen_adi, yapim_yili, film_turu, puan FROM fdb WHERE oyuncu_adi LIKE '%' + @oyuncu + '%'";
-                SqlCommand command = new SqlCommand(query, cn);
+                SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@oyuncu", oyuncu);
 
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -103,6 +105,7 @@ namespace WinFormsApp3
         }
 
 
+
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -112,10 +115,12 @@ namespace WinFormsApp3
         {
             string yonetmen = textBox2.Text.Trim();
 
-            using (cn)
+            using (SqlConnection connection = new SqlConnection(cn.ConnectionString))
             {
+                connection.Open();
+
                 string query = "SELECT film_adi, oyuncu_adi, yonetmen_adi, yapim_yili, film_turu, puan FROM fdb WHERE yonetmen_adi LIKE '%' + @yonetmen + '%'";
-                SqlCommand command = new SqlCommand(query, cn);
+                SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@yonetmen", yonetmen);
 
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -126,6 +131,7 @@ namespace WinFormsApp3
                 dataGridView1.DataSource = dataTable;
             }
         }
+
 
 
         private void textBox2_TextChanged(object sender, EventArgs e)
