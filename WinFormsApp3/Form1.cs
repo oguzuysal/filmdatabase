@@ -87,21 +87,13 @@ namespace WinFormsApp3
         {
             string oyuncu = textBox1.Text.Trim();
 
-            using (SqlConnection connection = new SqlConnection(cn.ConnectionString))
-            {
-                connection.Open();
+            string query = "SELECT film_adi, oyuncu_adi, yonetmen_adi, yapim_yili, film_turu, puan FROM fdb WHERE oyuncu_adi LIKE '%" + oyuncu + "%'";
 
-                string query = "SELECT film_adi, oyuncu_adi, yonetmen_adi, yapim_yili, film_turu, puan FROM fdb WHERE oyuncu_adi LIKE '%' + @oyuncu + '%'";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@oyuncu", oyuncu);
+            SqlDataAdapter adapter = new SqlDataAdapter(query, cn);
+            DataTable dataTable = new DataTable();
+            adapter.Fill(dataTable);
+            dataGridView1.DataSource = dataTable;
 
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                DataTable dataTable = new DataTable();
-
-                adapter.Fill(dataTable);
-
-                dataGridView1.DataSource = dataTable;
-            }
         }
 
 
@@ -114,22 +106,13 @@ namespace WinFormsApp3
         private void button8_Click(object sender, EventArgs e)
         {
             string yonetmen = textBox2.Text.Trim();
+            string query = "SELECT film_adi, oyuncu_adi, yonetmen_adi, yapim_yili, film_turu, puan FROM fdb WHERE yonetmen_adi LIKE '%" + yonetmen + "%'";
 
-            using (SqlConnection connection = new SqlConnection(cn.ConnectionString))
-            {
-                connection.Open();
+            SqlDataAdapter adapter = new SqlDataAdapter(query, cn);
+            DataTable dataTable = new DataTable();
+            adapter.Fill(dataTable);
+            dataGridView1.DataSource = dataTable;
 
-                string query = "SELECT film_adi, oyuncu_adi, yonetmen_adi, yapim_yili, film_turu, puan FROM fdb WHERE yonetmen_adi LIKE '%' + @yonetmen + '%'";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@yonetmen", yonetmen);
-
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                DataTable dataTable = new DataTable();
-
-                adapter.Fill(dataTable);
-
-                dataGridView1.DataSource = dataTable;
-            }
         }
 
 
